@@ -23,11 +23,6 @@ public class MissileSpawner : MonoBehaviour
         {
             return;
         }
-
-        if(boss.health == 0)
-        {
-            isAlive = false;
-        }
     }
 
     private void MissileSpawn()
@@ -38,7 +33,7 @@ public class MissileSpawner : MonoBehaviour
 
     IEnumerator MissleWave()
     {
-        if(isAlive==true)
+        while(true)
         {
             yield return new WaitForSeconds(respawnTime);
             MissileSpawn();

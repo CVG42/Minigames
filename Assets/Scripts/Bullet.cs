@@ -9,6 +9,7 @@ public class Bullet : MonoBehaviour
     public float speed;
     public PlayerController playerController;
     public bool isShot = false;
+    public ScoreManager scoreManager;
 
     void Update()
     {
@@ -26,12 +27,6 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !pickedup && playerController.hasBullet == false)
-        {
-            objTransform.parent = player;
-            pickedup = true;
-        }
-
         if (other.CompareTag("Enemy"))
         {
             Destroy(gameObject);

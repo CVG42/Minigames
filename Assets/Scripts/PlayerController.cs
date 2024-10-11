@@ -9,6 +9,11 @@ public class PlayerController : MonoBehaviour
     Vector3 moveDirection;
     public bool hasBullet = false;
 
+    public int ammo = 0;
+    public Transform spawnBullet;
+    public GameObject bullet;
+    public int bulletSpeed;
+
     void Start()
     {
         controller = gameObject.GetComponent<CharacterController>();
@@ -17,6 +22,14 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         Movement();
+
+        if (Input.GetKeyDown(KeyCode.Space) && ammo >= 1)
+        {
+            var mybullet = Instantiate(bullet, spawnBullet.position, spawnBullet.rotation);
+            mybullet.GetComponent<Rigidbody>().velocity = spawnBullet.right * bulletSpeed; 
+            GetComponent<ScoreManager>().score += 5;
+            print(GetComponent<ScoreManager>().score);
+        }
     }
 
     void Movement()
@@ -36,6 +49,9 @@ public class PlayerController : MonoBehaviour
         if(other.CompareTag("Bullet") && !hasBullet)
             hasBullet = true;
 
+        if (other.CompareTag("Bullet"))
+            ammo++;
+
         if (other.CompareTag("Attack"))
         {
             GetComponent<ScoreManager>().score--;
@@ -48,6 +64,11 @@ public class PlayerController : MonoBehaviour
         if(other.CompareTag("Bullet"))
         {
             hasBullet = false;
+        }
+
+        if (other.CompareTag("Spawned"))
+        {
+            ammo++;
         }
     }
 }
