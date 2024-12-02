@@ -35,6 +35,35 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public Action<SKIN_SELECTED> onSkinChanged;
+    public SKIN_SELECTED currentSkin;
+
+    public void ChangeSkinState(SKIN_SELECTED _selectedSkin)
+    {
+        currentSkin = _selectedSkin;
+        Debug.Log("Current skin: " + currentSkin);
+
+        if(onSkinChanged != null)
+        {
+            onSkinChanged.Invoke(currentSkin);
+        }
+    }
+
+    public void SkinBlue()
+    {
+        GameManager.GetInstance().ChangeSkinState(SKIN_SELECTED.BLUE);
+    }
+
+    public void SkinYellow()
+    {
+        GameManager.GetInstance().ChangeSkinState(SKIN_SELECTED.YELLOW);
+    }
+
+    public void SkinBlack()
+    {
+        GameManager.GetInstance().ChangeSkinState(SKIN_SELECTED.BLACK);
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.A))
@@ -57,4 +86,11 @@ public enum GAME_STATE
     PLAY,
     PAUSE,
     GAME_OVER
+}
+
+public enum SKIN_SELECTED
+{
+    BLUE,
+    YELLOW,
+    BLACK
 }
